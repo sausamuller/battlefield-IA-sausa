@@ -4,7 +4,7 @@ import ia.battle.core.FieldCell;
 import ia.battle.core.Warrior;
 import ia.battle.core.actions.Action;
 import ia.exceptions.RuleException;
-//Probando SourceTree
+
 public class Rider extends Warrior {
 
 	public Rider(String name, int health, int defense, int strength, int speed, int range) throws RuleException {
