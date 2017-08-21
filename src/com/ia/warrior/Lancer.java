@@ -21,7 +21,7 @@ public class Lancer extends Warrior {
 	@Override
 	public void wasAttacked(int damage, FieldCell source) {
 		// TODO Auto-generated method stub
-
+		// Hola soy un ataque de gae bolg
 	}
 
 	@Override
