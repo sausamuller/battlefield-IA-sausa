@@ -7,6 +7,7 @@ import ia.exceptions.RuleException;
 
 public class Archer extends Warrior {
 //flor 
+	//Facu
 	public Archer(String name, int health, int defense, int strength, int speed, int range) throws RuleException {
 		super(name, health, defense, strength, speed, range);
 		// TODO Auto-generated constructor stub
