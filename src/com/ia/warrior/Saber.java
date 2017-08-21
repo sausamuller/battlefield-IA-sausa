@@ -35,5 +35,7 @@ public class Saber extends Warrior {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 
 }
