@@ -7,6 +7,10 @@ import ia.exceptions.RuleException;
 
 public class Assassin extends Warrior {
 
+	
+	
+	
+	
 	public Assassin(String name, int health, int defense, int strength, int speed, int range) throws RuleException {
 		super(name, health, defense, strength, speed, range);
 		// TODO Auto-generated constructor stub
