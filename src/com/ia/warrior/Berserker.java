@@ -10,7 +10,7 @@ public class Berserker extends Warrior {
 	public Berserker(String name, int health, int defense, int strength, int speed, int range) throws RuleException {
 		super(name, health, defense, strength, speed, range);
 		// TODO Auto-generated constructor stub
-		//COMENTARIO FACU PRUEBA UNO DE COMMITS  
+		//COMENTARIO FACU PRUEBA UNO DE COMMITS  11
 	}
 
 	@Override
