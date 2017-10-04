@@ -87,6 +87,12 @@ public class PathFinder {
 		}
 
 		openedNodes.remove(node);
+		for (Node node2 : adjacentNodes) {
+			if (node2.getCell().getCost() > 1.1f) {
+				System.out.println("Entro en este punto cuando no debía");
+				closedNodes.add(node2);
+			}
+		}
 		closedNodes.add(node);
 
 		for (Node n : adjacentNodes) {

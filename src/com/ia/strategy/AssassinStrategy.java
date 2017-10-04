@@ -7,6 +7,7 @@ import com.ia.pathfinder.BoxFinder;
 import com.ia.pathfinder.PathFinder;
 
 import ia.battle.core.BattleField;
+import ia.battle.core.ConfigurationManager;
 import ia.battle.core.FieldCell;
 import ia.battle.core.actions.Action;
 import ia.battle.core.actions.Attack;
@@ -33,8 +34,23 @@ public class AssassinStrategy extends AbstractGeneralStrategy {
 			}
 			
 			if (getEnemyPosition().getX() > getPosition().getX()) {
-				newX = getEnemyPosition().getX() - Double.valueOf(Math.floor((getEnemyPosition().getX() - (getPosition().getX() * 1.5)))).intValue();
+				newX = getPosition().getX() - (getEnemyPosition().getX() - getPosition().getX());
+			} else if (getEnemyPosition().getX() < getPosition().getX()) {
+				newX = getPosition().getX() + (getPosition().getX() - getEnemyPosition().getX());
+			} else if (getEnemyPosition().getX() == getPosition().getX()) {
+				newX = getPosition().getX() + 2;
 			}
+			
+			if (newY <= 1 || newY >= ConfigurationManager.getInstance().getMapHeight()) {
+				newX += newY;
+				newY = 0;
+			}
+			if (newX <= 1 || newX >= ConfigurationManager.getInstance().getMapWidth()) {
+				newY += newX;
+				newX = 0;
+			}
+			
+			
 			MoveWarrior move = new MoveWarrior();
 			move.setMoves(PathFinder.getInstance().findPath(getPosition(), BattleField.getInstance().getFieldCell(newX, newY)));
 			return move;
@@ -47,6 +63,10 @@ public class AssassinStrategy extends AbstractGeneralStrategy {
 					move.setMoves(path);
 					return move;
 				}
+			} else {
+				MoveWarrior move = new MoveWarrior();
+				move.setMoves(PathFinder.getInstance().findPath(getPosition(), BattleField.getInstance().getEnemyData().getFieldCell()));
+				return move;
 			}
 		}
 		return null;

@@ -16,16 +16,35 @@ public class Ruler extends WarriorManager {
 
 	private int maxPoints;
 	
+	private static int turn = 1;
+	
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Ruler";
 	}
 
 	@Override
 	public Warrior getNextWarrior() throws RuleException {
-		// TODO Auto-generated method stub
-		return null;
+		if (turn == 1) {
+			turn ++;
+			return calculateAssassinAtributes();
+		} else if (turn%2 == 0) {
+			turn ++;
+			return calculateArcherAtributes();
+		}  else if (turn%3 == 0) {
+			turn ++;
+			return calculateLancerAtributes();
+		}  else if (turn%5 == 0) {
+			turn ++;
+			return calculateRiderAtributes();
+		} else if (ConfigurationManager.getInstance().getTurnsToShrink() <= 100) {
+			turn ++;
+			return calculateBerserkerAtributes();
+		} else {
+			turn ++;
+			return calculateRiderAtributes();
+		}
+//		return null;
 	}
 
 	public Warrior calculateArcherAtributes() {
