@@ -7,6 +7,7 @@ import com.ia.warrior.Lancer;
 import com.ia.warrior.Rider;
 import com.ia.warrior.Saber;
 
+import ia.battle.core.BattleField;
 import ia.battle.core.ConfigurationManager;
 import ia.battle.core.Warrior;
 import ia.battle.core.WarriorManager;
@@ -28,6 +29,9 @@ public class Ruler extends WarriorManager {
 		if (turn == 1) {
 			turn ++;
 			return calculateAssassinAtributes();
+		}  else if (BattleField.getInstance().getEnemyData().getHealth() <= (BattleField.getInstance().getEnemyData().getHealth() * 0.5)) {
+			turn ++;
+			return calculateBerserkerAtributes();
 		} else if (turn%2 == 0) {
 			turn ++;
 			return calculateArcherAtributes();
@@ -36,10 +40,7 @@ public class Ruler extends WarriorManager {
 			return calculateLancerAtributes();
 		}  else if (turn%5 == 0) {
 			turn ++;
-			return calculateRiderAtributes();
-		} else if (ConfigurationManager.getInstance().getTurnsToShrink() <= 100) {
-			turn ++;
-			return calculateBerserkerAtributes();
+			return calculateSaberAtributes();
 		} else {
 			turn ++;
 			return calculateRiderAtributes();
