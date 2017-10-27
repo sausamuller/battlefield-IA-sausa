@@ -18,8 +18,6 @@ public class AbstractGeneralStrategy implements Strategy {
 	private FieldCell enemyPosition;
 	
 	private boolean attack = true;
-	
-	public boolean showLog = true;
 
 	public AbstractGeneralStrategy() {
 		attack = true;
@@ -27,54 +25,62 @@ public class AbstractGeneralStrategy implements Strategy {
 
 	@Override
 	public Action playTurn(long tick, int actionNumber) {
-		if (showLog) {
-			System.out.println("Is Here!!");
-		}
-		if (actionNumber == 2) {
+		if (actionNumber == 1) {
 			this.setAttack(true);
 		}
-		if (actionNumber == 2 && BattleField.getInstance().getEnemyData().getInRange() && this.isAttack()) {
+		if (BattleField.getInstance().getEnemyData().getInRange() && this.isAttack()) {
 			this.setAttack(false);
 			return new Attack(getEnemyPosition());	
-		} else if (actionNumber == 3 && !this.isAttack()) {
+		} else if (!this.isAttack()) {
 			int newX = 0;
 			int newY = 0;
 			if (getEnemyPosition().getY() > getPosition().getY()) {
-				newY = getPosition().getY() - (getEnemyPosition().getY() - getPosition().getY());
+				newY = (getPosition().getY() - (getEnemyPosition().getY() - getPosition().getY())) * 10;
+				if (newY >= ConfigurationManager.getInstance().getMapHeight()) {
+					newY = ConfigurationManager.getInstance().getMapHeight() - 1;
+				}
 			} else if (getEnemyPosition().getY() < getPosition().getY()) {
-				newY = getPosition().getY() + (getPosition().getY() - getEnemyPosition().getY());
+				newY = (getPosition().getY() + (getPosition().getY() - getEnemyPosition().getY())) * 10;
+				if (newY >= ConfigurationManager.getInstance().getMapHeight()) {
+					newY = ConfigurationManager.getInstance().getMapHeight() - 1;
+				}
 			} else if( getEnemyPosition().getY() == getPosition().getY()){
-				newY = getPosition().getY() + 2;
+				newY = (getPosition().getY() + 2) * 10;
+				if (newY >= ConfigurationManager.getInstance().getMapHeight()) {
+					newY = ConfigurationManager.getInstance().getMapHeight() - 1;
+				}
 			}
 			
 			if (getEnemyPosition().getX() > getPosition().getX()) {
-				newX = getPosition().getX() - (getEnemyPosition().getX() - getPosition().getX());
+				newX = (getPosition().getX() - (getEnemyPosition().getX() - getPosition().getX())) * 10;
+				if (newX >= ConfigurationManager.getInstance().getMapWidth()) {
+					newX = ConfigurationManager.getInstance().getMapWidth() - 1;
+				}
 			} else if (getEnemyPosition().getX() < getPosition().getX()) {
-				newX = getPosition().getX() + (getPosition().getX() - getEnemyPosition().getX());
+				newX = (getPosition().getX() + (getPosition().getX() - getEnemyPosition().getX())) * 10;
+				if (newX >= ConfigurationManager.getInstance().getMapWidth()) {
+					newX = ConfigurationManager.getInstance().getMapWidth() - 1;
+				}
 			} else if (getEnemyPosition().getX() == getPosition().getX()) {
-				newX = getPosition().getX() + 2;
-			}
-			
-			if (newY <= 1 || newY >= ConfigurationManager.getInstance().getMapHeight()) {
-				newX += newY;
-				newY = 0;
-			}
-			if (newX <= 1 || newX >= ConfigurationManager.getInstance().getMapWidth()) {
-				newY += newX;
-				newX = 0;
+				newX = (getPosition().getX() + 2) * 10;
+				if (newX >= ConfigurationManager.getInstance().getMapWidth()) {
+					newX = ConfigurationManager.getInstance().getMapWidth() - 1;
+				}
 			}
 			
 			MoveWarrior move = new MoveWarrior();
-			move.setMoves(PathFinder.getInstance().findPath(getPosition(), BattleField.getInstance().getFieldCell(newX, newY)));
+			try {
+				move.setMoves(PathFinder.getInstance().findPath(getPosition(), BattleField.getInstance().getFieldCell(newX, newY)));
+			} catch (Exception e) {
+				System.out.println("enter here");
+				System.out.println(newX);
+				System.out.println(newY);
+				e.printStackTrace();
+			}
+			
 			return move;
 		} else {
-			if (showLog) {
-				System.out.println("Is Ready to move!!");
-			}
 			ArrayList<FieldCell> specialItems = BattleField.getInstance().getSpecialItems();
-			if (showLog) {
-				System.out.println("special Items size: " + specialItems.size());
-			}
 			if (specialItems.size() > 0 ) {
 				ArrayList<FieldCell> path = BoxFinder.getInstance().getPathFrom(this.getPosition());
 				if(path != null){
@@ -83,9 +89,6 @@ public class AbstractGeneralStrategy implements Strategy {
 					return move;
 				}
 			} else {
-				if (showLog) {
-					System.out.println("will go to attack");
-				}
 				MoveWarrior move = new MoveWarrior();
 				move.setMoves(PathFinder.getInstance().findPath(getPosition(), BattleField.getInstance().getEnemyData().getFieldCell()));
 				return move;

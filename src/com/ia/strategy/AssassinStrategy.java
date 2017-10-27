@@ -26,33 +26,50 @@ public class AssassinStrategy extends AbstractGeneralStrategy {
 			int newX = 0;
 			int newY = 0;
 			if (getEnemyPosition().getY() > getPosition().getY()) {
-				newY = getPosition().getY() - (getEnemyPosition().getY() - getPosition().getY());
+				newY = (getPosition().getY() - (getEnemyPosition().getY() - getPosition().getY())) * 10;
+				if (newY > ConfigurationManager.getInstance().getMapHeight()) {
+					newY = ConfigurationManager.getInstance().getMapHeight();
+				}
 			} else if (getEnemyPosition().getY() < getPosition().getY()) {
-				newY = getPosition().getY() + (getPosition().getY() - getEnemyPosition().getY());
+				newY = (getPosition().getY() + (getPosition().getY() - getEnemyPosition().getY())) * 10;
+				if (newY > ConfigurationManager.getInstance().getMapHeight()) {
+					newY = ConfigurationManager.getInstance().getMapHeight();
+				}
 			} else if( getEnemyPosition().getY() == getPosition().getY()){
-				newY = getPosition().getY() + 2;
+				newY = (getPosition().getY() + 2) * 10;
+				if (newY > ConfigurationManager.getInstance().getMapHeight()) {
+					newY = ConfigurationManager.getInstance().getMapHeight();
+				}
 			}
 			
 			if (getEnemyPosition().getX() > getPosition().getX()) {
-				newX = getPosition().getX() - (getEnemyPosition().getX() - getPosition().getX());
+				newX = (getPosition().getX() - (getEnemyPosition().getX() - getPosition().getX())) * 10;
+				if (newX > ConfigurationManager.getInstance().getMapWidth()) {
+					newX = ConfigurationManager.getInstance().getMapWidth();
+				}
 			} else if (getEnemyPosition().getX() < getPosition().getX()) {
-				newX = getPosition().getX() + (getPosition().getX() - getEnemyPosition().getX());
+				newX = (getPosition().getX() + (getPosition().getX() - getEnemyPosition().getX())) * 10;
+				if (newX > ConfigurationManager.getInstance().getMapWidth()) {
+					newX = ConfigurationManager.getInstance().getMapWidth();
+				}
 			} else if (getEnemyPosition().getX() == getPosition().getX()) {
-				newX = getPosition().getX() + 2;
-			}
-			
-			if (newY <= 1 || newY >= ConfigurationManager.getInstance().getMapHeight()) {
-				newX += newY;
-				newY = 0;
-			}
-			if (newX <= 1 || newX >= ConfigurationManager.getInstance().getMapWidth()) {
-				newY += newX;
-				newX = 0;
+				newX = (getPosition().getX() + 2) * 10;
+				if (newX > ConfigurationManager.getInstance().getMapWidth()) {
+					newX = ConfigurationManager.getInstance().getMapWidth();
+				}
 			}
 			
 			
 			MoveWarrior move = new MoveWarrior();
-			move.setMoves(PathFinder.getInstance().findPath(getPosition(), BattleField.getInstance().getFieldCell(newX, newY)));
+			try {
+				move.setMoves(PathFinder.getInstance().findPath(getPosition(), BattleField.getInstance().getFieldCell(newX, newY)));
+			} catch (Exception e) {
+				System.out.println("enter here");
+				System.out.println(newX);
+				System.out.println(newY);
+				e.printStackTrace();
+			}
+			
 			return move;
 		} else {
 			ArrayList<FieldCell> specialItems = BattleField.getInstance().getSpecialItems();
