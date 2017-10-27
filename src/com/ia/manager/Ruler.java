@@ -54,9 +54,9 @@ public class Ruler extends WarriorManager {
 		
 		int health = Double.valueOf(Math.floor(maxPoints * 0.13)).intValue();
 		int defense = Double.valueOf(Math.floor(maxPoints * 0.13)).intValue();
-		int strength = Double.valueOf(Math.floor(maxPoints * 0.30)).intValue();
-		int speed = Double.valueOf(Math.floor(maxPoints * 0.13)).intValue();
-		int range = Double.valueOf(Math.floor(maxPoints * 0.30)).intValue();
+		int strength = Double.valueOf(Math.floor(maxPoints * 0.26)).intValue();
+		int speed = Double.valueOf(Math.floor(maxPoints * 0.20)).intValue();
+		int range = Double.valueOf(Math.floor(maxPoints * 0.27)).intValue();
 		
 		int sum = health + defense + strength + speed + range;
 
@@ -183,10 +183,10 @@ public class Ruler extends WarriorManager {
 	public Warrior calculateLancerAtributes() {
 		maxPoints = ConfigurationManager.getInstance().getMaxPointsPerWarrior();
 		
-		int health = Double.valueOf(Math.floor(maxPoints * 0.27)).intValue();
-		int defense = Double.valueOf(Math.floor(maxPoints * 0.24)).intValue();
+		int health = Double.valueOf(Math.floor(maxPoints * 0.25)).intValue();
+		int defense = Double.valueOf(Math.floor(maxPoints * 0.22)).intValue();
 		int strength = Double.valueOf(Math.floor(maxPoints * 0.17)).intValue();
-		int speed = Double.valueOf(Math.floor(maxPoints * 0.16)).intValue();
+		int speed = Double.valueOf(Math.floor(maxPoints * 0.20)).intValue();
 		int range = Double.valueOf(Math.floor(maxPoints * 0.12)).intValue();
 		
 		int sum = health + defense + strength + speed + range;
